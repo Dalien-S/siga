@@ -1,9 +1,11 @@
 package main
 
 import (
+	"crypto/sha512"
 	"encoding/json"
-	"github.com/gboncoffee/siga/auth/repository"
 	"net/http"
+
+	"github.com/gboncoffee/siga/auth/repository"
 )
 
 type CredentialsRequest struct {
@@ -20,10 +22,12 @@ func credentials(w http.ResponseWriter, r *http.Request) {
 
 	c := repository.Credential{
 		Username: req.Username,
-		Password: req.Password,
+		Password: sha512.Sum512([]byte(req.Password)),
 	}
 	if err := repository.NewCredential(c); err != nil {
 		http.Error(w, "internal server error", http.StatusInternalServerError)
 		return
 	}
+
+	w.WriteHeader(http.StatusOK)
 }

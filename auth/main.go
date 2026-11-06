@@ -16,6 +16,7 @@ func main() {
 	flag.Parse()
 
 	router()
+
 	log.Println("Listening on " + addr + ":" + port)
 	log.Fatal(http.ListenAndServe(addr+":"+port, nil))
 }

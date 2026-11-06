@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"errors"
+	"log"
 
 	_ "modernc.org/sqlite"
 )
@@ -17,12 +18,19 @@ var ErrNotFound = errors.New("not found")
 var db *sql.DB
 
 func init() {
-	db, _ = sql.Open("sqlite", "db.db")
-	db.Exec(`
+	var err error
+	db, err = sql.Open("sqlite", "db.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	_, err = db.Exec(`
 		CREATE TABLE IF NOT EXISTS credentials (
 			username TEXT NOT NULL UNIQUE,
 			password TEXT NOT NULL
 		)`)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func NewCredential(c Credential) error {

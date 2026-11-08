@@ -68,11 +68,11 @@ func NewSession(token uuid.UUID) error {
 	return err
 }
 
-func SessionExists(token uuid.UUID) bool {
+func SessionExists(token uuid.UUID) error {
 	var t uuid.UUID
 	err := db.QueryRow(
 		`SELECT token FROM sessions WHERE token = ?`,
-		token,
+		token[:],
 	).Scan(&t)
-	return err == nil
+	return err
 }

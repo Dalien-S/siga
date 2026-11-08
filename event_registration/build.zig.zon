@@ -1,0 +1,17 @@
+.{
+    .name = .event_registration,
+    .version = "0.0.1",
+    .dependencies = .{
+        .sqlite = .{
+            .url = "git+https://github.com/vrischmann/zig-sqlite#1eba1e490629897e71dc3a23aad6fe9a319e0c82",
+            .hash = "sqlite-3.48.0-F2R_azOoDgB4eu7BHE5c8WtBnKufFQnhD1xqD5TgTxg4",
+        },
+        .httpz = .{
+            .url = "git+https://github.com/karlseguin/http.zig?ref=master#1bb71ff128a044b1645df91046473c38abbf965c",
+            .hash = "httpz-0.0.0-PNVzrFNMCQBySpfunggKlQQoD_FvF3yADlqg3xfbdX8p",
+        },
+    },
+    .minimum_zig_version = "0.17.0",
+    .paths = .{""},
+    .fingerprint = 0x8fbbad541a000319,
+}

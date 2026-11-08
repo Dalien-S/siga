@@ -1,2 +1,6 @@
 auth/db.db
 auth/auth
+event_registration/events.db
+event_registration/zig-out
+event_registration/zig-pkg
+event_registration/.zig-cache

@@ -3,7 +3,6 @@ package main
 import (
 	"crypto/sha512"
 	"encoding/json"
-	"log"
 	"net/http"
 	"uuid"
 
@@ -28,15 +27,11 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 	c, err := repository.GetByUsername(req.Username)
 	if err != nil {
-		log.Println("here")
-		log.Println(err)
 		http.Error(w, "invalid username or password", http.StatusUnauthorized)
 		return
 	}
 
 	if c.Password != sha512.Sum512([]byte(req.Password)) {
-		log.Println("there")
-		log.Println(err)
 		http.Error(w, "invalid username or password", http.StatusUnauthorized)
 		return
 	}

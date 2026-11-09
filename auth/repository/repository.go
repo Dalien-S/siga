@@ -3,7 +3,6 @@ package repository
 import (
 	"crypto/sha512"
 	"database/sql"
-	"errors"
 	"log"
 	"uuid"
 
@@ -14,8 +13,6 @@ type Credential struct {
 	Username string
 	Password [sha512.Size]byte
 }
-
-var ErrNotFound = errors.New("not found")
 
 var db *sql.DB
 
@@ -68,11 +65,18 @@ func NewSession(token uuid.UUID) error {
 	return err
 }
 
-func SessionExists(token uuid.UUID) bool {
+func SessionExists(token uuid.UUID) error {
 	var t uuid.UUID
 	err := db.QueryRow(
 		`SELECT token FROM sessions WHERE token = ?`,
-		token,
+		token[:],
 	).Scan(&t)
-	return err == nil
+	return err
+}
+
+func DeleteSession(token uuid.UUID) error {
+	_, err := db.Exec(
+		`DELETE FROM sessions WHERE token = ?`, token[:],
+	)
+	return err
 }
